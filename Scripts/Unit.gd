@@ -7,6 +7,9 @@ extends Area2D
 # Declare member variables here.
 export var moves : int = 3;  #number of moves per unit
 export var max_moves : int = 3;
+export var hitpoints : int = 14
+export var max_hitpoints : int = 14
+export var firepower : int = 8
 
 # direction for movement
 var direction = Vector2()
@@ -28,30 +31,27 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _input(event):
-	print("Game Mode: " + str(GameManager.gameMode))
 	if GameManager.gameMode == 1 and self.isSelected:
-		self.update_move_cursor()
-		
-	
-#	# if left click -> do action accordingly to game mode
-#	if Input.is_action_just_released("left_click") and self.isSelected:
-#		print("Left mouse button released.")
-#		if GameManager.gameMode == 0: 
-#			if self.moves > 0:
-#				# change game mode to "move" 
-#				GameManager.gameMode = 1
-#				# show mode cursor
-#				$MoveCursor.visible = true
-#				# identify selected vehicle
-#				self.isSelected = true
-#				# Change info bar
-#				ui.set_moveslabel("moves left: " + str(self.moves) + " / max moves:" + str(self.max_moves))
-#		# Quit move mode and enter game mode: select (0)
-#		elif GameManager.gameMode == 1:
-#			print("Click and change Game Mode to 0")
-#			# change game mode to "select"
-#			move()
-			
+		self.update_move_cursor()	
+	# if left click -> do action accordingly to game mode
+	if Input.is_action_just_released("left_click") and self.isSelected:
+		if GameManager.gameMode == 1:
+			# change game mode to "select"
+			move()
+			# if all moves are consumed -> top moving
+			if self.moves < 1:
+				self.end_move()
+	# if "ESC" is pressed and game mode "move" -> end game mode
+	if Input.is_action_just_pressed("ui_cancel") and self.isSelected:
+		self.end_move()
+	if Input.is_action_just_released("ui_accept"):
+		match GameManager.gameMode:
+			0: # normal / select mode
+					pass
+			1: # move unit mode
+				self.end_move()
+				GameManager.gameMode = 0;
+				GameManager.endTurn()
 
 #		
 # SIGNAL: if click on vehicle
@@ -59,54 +59,20 @@ func _input(event):
 func _on_Vehicle_input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT and event.is_pressed() and not event.is_echo():
 			# only if 1st collision shape is clicked
+			print("Clicked: " + str(self.get_node(self.get_path())) + " on Shape: " + str(shape_idx))
+			# do only something IF main collision shape has input
 			if shape_idx == 0:
 				match GameManager.gameMode:
 					0:
-						print("Clicked: " + str(self.get_node(self.get_path())) + " on Shape: " + str(shape_idx))
-						self.isSelected = true
-						$MoveCursor.visible=true
-						$VehicleSprite.visible=false
-						GameManager.gameMode = 1
+						# if all moves consumed for this turn => no change in game mode "move"
+						if self.moves > 0:
+							print("Change to game mode 1")
+							self.isSelected = true
+							$MoveCursor.visible=true
+							$VehicleSprite.visible=false
+							GameManager.gameMode = 1
 					1:
-						print("Clicked: " + str(self.get_node(self.get_path())) + " on Shape: " + str(shape_idx))
-						self.isSelected = false
-						$MoveCursor.visible=false
-						$VehicleSprite.visible=true
-						GameManager.gameMode = 0
-
-#	# mouse pressed
-#	if event is InputEventMouseButton and event.pressed:
-#		print(str(self.get_path()) + ": Node clicked")
-#		print("Clicked at: " + str(event.position))
-#		print("Unit position: " +str(self.position))
-#		# Enter game mode: move (1), only if moves left			
-#		if GameManager.gameMode == 0: 
-#			if self.moves > 0:
-#				# change game mode to "move" 
-#				GameManager.gameMode = 1
-#				# show mode cursor
-#				$MoveCursor.visible = true
-#				# identify selected vehicle
-#				self.isSelected = true
-#				# Change info bar
-#				ui.change_Label("moves left: " + str(self.moves) + " / max moves:" + str(self.max_moves))
-#		# Quit move mode and enter game mode: select (0)
-#		elif GameManager.gameMode == 1:
-#			print("Click and change Game Mode to 0")
-#			# change game mode to "select"
-#			self.end_move()
-
-#func _unhandled_input(event):
-#	if (event is InputEventMouseButton) and event.pressed and self.isSelected:
-#		print("global event") 
-#		print("Clicked at: " + str(event.position))
-#		print("Unit position before: " +str(self.position))
-#		if self.isSelected:
-#			if GameManager.gameMode == 1:
-#				# move vehicle
-#				move(direction)
-#				print("Unit position after: " +str(self.position))
-			
+						self.end_move()
 #		
 # update position
 #
@@ -127,35 +93,25 @@ func move():
 			self.moves = self.moves -1
 		# change control UI
 		ui.set_moveslabel("moves left: " + str(self.moves) + " / max moves:" + str(self.max_moves))
-		# if all moves are consumed -> top moving
-		if self.moves < 1:
-			self.end_move()
-		
-	#else:
-	#	var collider = ray.get_collider()
-#		if collider.is_in_group('box'):
-#			if collider.move(dir):#
-#				position += vector_pos#
-#	self.position = self.position + direction * GameManager.pixelWidh
 #
 # End move & clean up
 #
 func end_move():
+	print("End move")
 	GameManager.gameMode = 0
 	$MoveCursor.visible = false
+	$VehicleSprite.visible = true
 	self.isSelected = false
 	ui.set_moveslabel("Was hier los?")
-
+#
+# Update move cursor according to mouse position
+#
 func update_move_cursor():
 	# get pixel width of tiles
 	var pixelW = GameManager.pixelWidth
 	# get global mouse pos
 	var mousepos = get_global_mouse_position()
-	print("mousepos: " + str(mousepos))
-	print("position : " + str(self.position))
-	print("position X + 32 : " + str(self.position.x + pixelW))
-	print("position Y + 32 : " + str(self.position.y + pixelW))
-#
+	direction = Vector2(0,0)
 	# start frame is always center frame
 	$MoveCursor.set_frame(0)
 	# right
@@ -227,3 +183,11 @@ func set_sprite_frame(dir):
 	if direction.x == -1 and direction.y == 1:
 		$VehicleSprite.set_frame(5)
 
+
+
+func _on_Area2D_mouse_entered():
+	$Area2D/ContextInfo.visible=true
+
+
+func _on_Area2D_mouse_exited():
+	$Area2D/ContextInfo.visible=false
