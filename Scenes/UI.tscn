@@ -1,0 +1,50 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Scripts/UI.gd" type="Script" id=1]
+
+[node name="UI" type="Control"]
+margin_right = 1280.0
+margin_bottom = 32.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BG" type="ColorRect" parent="."]
+margin_right = 1280.0
+margin_bottom = 32.0
+color = Color( 0.392157, 0.392157, 0.392157, 1 )
+
+[node name="Button" type="Button" parent="."]
+margin_left = 581.376
+margin_top = 7.46655
+margin_right = 648.376
+margin_bottom = 27.4666
+text = "End Turn"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MovesLabel" type="Label" parent="."]
+margin_left = 381.376
+margin_top = 7.46655
+margin_right = 576.376
+margin_bottom = 21.4666
+rect_pivot_offset = Vector2( 43.3165, 7.05603 )
+text = "StepsLeft: 3 (3)"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TurnsLabel" type="Label" parent="."]
+margin_left = 181.376
+margin_top = 7.46655
+margin_right = 376.376
+margin_bottom = 21.4666
+rect_pivot_offset = Vector2( 43.3165, 7.05603 )
+text = "Turns: 1"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]
+[connection signal="toggled" from="Button" to="." method="_on_Button_toggled"]
