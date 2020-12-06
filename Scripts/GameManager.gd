@@ -4,6 +4,7 @@ extends Node
 # - Make better use of Godot Vector (UP, UPLEFT, ...)
 # - arrange sprite frames according to Vector
 # - move cursor: separate from vehicle -> save resources
+# - put unit declaration into extra file
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -28,10 +29,11 @@ onready var ui = get_node("/root/Node2D/UI")
 
 func _ready():
 	# activate fog of war
-	get_node("/root/Node2D/Area2D/FOG").visible = true
+	get_node("/root/Node2D/Area2D/FOG").visible = false
 
 func _input(event):
-	if Input.is_action_just_released("ui_accept"):
+	if Input.is_action_just_pressed("ui_accept"):
+		print("ui_accept (Enter) presseds")
 		match self.gameMode:
 			0: # normal / select mode
 				self.endTurn()
@@ -40,7 +42,7 @@ func _input(event):
 				self.gameMode = 0;
 
 func endTurn():
-	print(str(self.turns) + "Turn ended")
+	print(str(self.turns) + " Turn ended")
 	# when we're initialized, get all of the units
 	allUnits = get_tree().get_nodes_in_group("Units")
 	# reset attributes
@@ -50,3 +52,19 @@ func endTurn():
 	# increases turns
 	self.turns += 1
 	ui.set_turnslabel("Turns: " + str(self.turns))
+	
+	self.gameMode = 0
+
+#
+# Unit declarations
+# 
+func get_shoot_circle(unit):
+	# local shoot circle var
+	var shoot_circle = Array()
+	# fill local var with values depending on called parameter
+	match unit:
+		"Hornisse":
+			shoot_circle.append(Vector2(0,-1))
+			shoot_circle.append(Vector2(1,-1))
+	
+	return shoot_circle
