@@ -11,6 +11,7 @@ extends Node
 # var b = "text"
 var allUnits : Array
 
+# for game mode 2 (shoot) to identify correct unit to show crosshair
 var selected_unit : Node
 
 var turns : int = 1 # count turns
@@ -29,7 +30,7 @@ onready var ui = get_node("/root/Node2D/UI")
 
 func _ready():
 	# activate fog of war
-	get_node("/root/Node2D/Area2D/FOG").visible = false
+	get_node("/root/Node2D/Area2D/FOG").visible = true
 
 func _input(event):
 	if Input.is_action_just_pressed("ui_accept"):

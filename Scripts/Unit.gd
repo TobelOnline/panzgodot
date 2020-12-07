@@ -19,7 +19,7 @@ var isSelected : bool = false;
 # shoot circle
 var shoot_circle = Array()
 # mouse in shape
-var mouse_in_collision_shape : bool = false
+var mouse_in_collision_shape : bool = false #TODO: depricated, clean up
 
 onready var ray = $RayCast2D
 onready var ui = get_node("/root/Node2D/UI")
@@ -31,7 +31,8 @@ func _ready():
 	#$MoveCursor.visible = false
 	print("Panzer 2 created")
 	add_to_group("Units")
-	$CollisionShape2D.set_process(false)
+	#$CollisionShape2D.set_process(false) #TODO warum
+	$CrosshairTileMap.visible = true #activate aiming
 	shoot_circle=GameManager.get_shoot_circle("Hornisse")
 
 
@@ -101,14 +102,15 @@ func _on_Vehicle_input_event(viewport, event, shape_idx):
 				0:
 					# if all moves consumed for this turn => no change in game mode "move"
 					if self.shots > 0:
-						print("Change to game mode 2")
+						print("Change to game mode 2 (shoot)")
 						self.isSelected = true
-						$CrosshairAread2D.visible=true
-						$VehicleSprite.visible=true
+						GameManager.selected_unit = $CrosshairTileMap
 						GameManager.gameMode = 2
-						self.mouse_in_collision_shape = true
 				2: # end shoot
-					pass
+						print("Change to game mode 0 from 2 (shoot)")
+						self.isSelected = true
+						GameManager.selected_unit = null
+						GameManager.gameMode = 0
 #		
 # update position
 #
@@ -137,10 +139,12 @@ func move():
 func end_move():
 	print("End move")
 	GameManager.gameMode = 0
+	# rests from game mode = 1 (move)
 	$MoveCursor.visible = false
 	$VehicleSprite.visible = true
-	$CrosshairAread2D.visible = false
 	self.isSelected = false
+	# clean up from game mode = 2 (shoot)
+	GameManager.selected_unit = null
 	ui.set_moveslabel("Was hier los?")
 #
 # Update move cursor according to mouse position
@@ -223,7 +227,6 @@ func set_sprite_frame(dir):
 		$VehicleSprite.set_frame(5)
 
 func aim():
-	if mouse_in_collision_shape == true:
 
 		var mousepos = get_global_mouse_position()
 		var _new_dir : Vector2
@@ -241,7 +244,6 @@ func aim():
 			print("Collider: " + str(collider))
 	#	print("unit pos: " + str($CrosshairAread2D/Sprite.position))
 
-		$CrosshairAread2D/Sprite.position=_new_dir
 		print(str(ray.get_collider()))
 		
 #	# update ray cast
@@ -273,11 +275,19 @@ func _on_Area2D_mouse_exited():
 	$ContextInfoAread2D/ContextInfo.visible=false
 
 
-func _on_Unit_mouse_entered():
-	if GameManager.gameMode == 2:
-		mouse_in_collision_shape = true
+#func _on_Unit_mouse_entered():
+#	if GameManager.gameMode == 2:
+#		mouse_in_collision_shape = true
+#
+#
+#func _on_Unit_mouse_exited():
+#	if GameManager.gameMode == 2:
+#		mouse_in_collision_shape = false
 
 
-func _on_Unit_mouse_exited():
-	if GameManager.gameMode == 2:
-		mouse_in_collision_shape = false
+func _on_CrosshairAread2D_mouse_entered():
+	$CrosshairAread2D/Sprite.visible = true
+
+
+func _on_CrosshairAread2D_mouse_exited():
+	$CrosshairAread2D/Sprite.visible = false
