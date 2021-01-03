@@ -1,0 +1,209 @@
+[gd_scene load_steps=26 format=2]
+
+[ext_resource path="res://Sprites/Hornisse.png" type="Texture" id=1]
+[ext_resource path="res://Scripts/Unit.gd" type="Script" id=2]
+[ext_resource path="res://Sprites/move_arrow.png" type="Texture" id=3]
+[ext_resource path="res://Scenes/CrosshairPart.tscn" type="PackedScene" id=4]
+
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 3 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 3 )
+region = Rect2( 32, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 3 )
+region = Rect2( 64, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 3 )
+region = Rect2( 96, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 3 )
+region = Rect2( 128, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=6]
+atlas = ExtResource( 3 )
+region = Rect2( 160, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=7]
+atlas = ExtResource( 3 )
+region = Rect2( 192, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=8]
+atlas = ExtResource( 3 )
+region = Rect2( 224, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=9]
+atlas = ExtResource( 3 )
+region = Rect2( 256, 0, 32, 32 )
+
+[sub_resource type="SpriteFrames" id=10]
+animations = [ {
+"frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="AtlasTexture" id=11]
+atlas = ExtResource( 1 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=12]
+atlas = ExtResource( 1 )
+region = Rect2( 32, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=13]
+atlas = ExtResource( 1 )
+region = Rect2( 64, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=14]
+atlas = ExtResource( 1 )
+region = Rect2( 96, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=15]
+atlas = ExtResource( 1 )
+region = Rect2( 128, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=16]
+atlas = ExtResource( 1 )
+region = Rect2( 160, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=17]
+atlas = ExtResource( 1 )
+region = Rect2( 192, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=18]
+atlas = ExtResource( 1 )
+region = Rect2( 224, 0, 32, 32 )
+
+[sub_resource type="SpriteFrames" id=19]
+animations = [ {
+"frames": [ SubResource( 11 ), SubResource( 12 ), SubResource( 13 ), SubResource( 14 ), SubResource( 15 ), SubResource( 16 ), SubResource( 17 ), SubResource( 18 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=20]
+extents = Vector2( 15.7109, 15.5166 )
+
+[sub_resource type="RectangleShape2D" id=21]
+
+[node name="Unit" type="Area2D"]
+script = ExtResource( 2 )
+
+[node name="MoveCursor" type="AnimatedSprite" parent="."]
+frames = SubResource( 10 )
+centered = false
+
+[node name="VehicleSprite" type="AnimatedSprite" parent="."]
+frames = SubResource( 19 )
+centered = false
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+position = Vector2( 16, 16 )
+cast_to = Vector2( 0, 32 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 16, 16 )
+shape = SubResource( 20 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PoolVector2Array( -32, -64, 64, -64, 64, -32, 96, -32, 96, 64, 64, 64, 64, 96, -32, 96, -32, 64, -64, 64, -64, -32, -32, -32 )
+
+[node name="ContextInfoAread2D" type="Area2D" parent="."]
+collision_layer = 32
+collision_mask = 32
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="ContextInfoAread2D"]
+position = Vector2( 16, 16 )
+shape = SubResource( 21 )
+
+[node name="ContextInfo" type="Label" parent="ContextInfoAread2D"]
+visible = false
+margin_left = 32.0
+margin_right = 100.0
+margin_bottom = 65.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 1, 1, 1, 1 )
+text = "T:Hornisse
+H: 14 (14)
+M: 3 (3)"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CrosshairTileMap" type="TileMap" parent="."]
+visible = false
+format = 1
+
+[node name="CrosshairPart" parent="CrosshairTileMap" instance=ExtResource( 4 )]
+
+[node name="CrosshairPart2" parent="CrosshairTileMap" instance=ExtResource( 4 )]
+position = Vector2( 0, -32 )
+
+[node name="CrosshairPart3" parent="CrosshairTileMap" instance=ExtResource( 4 )]
+position = Vector2( -32, 0 )
+
+[node name="CrosshairPart4" parent="CrosshairTileMap" instance=ExtResource( 4 )]
+position = Vector2( -32, -32 )
+
+[node name="CrosshairPart5" parent="CrosshairTileMap" instance=ExtResource( 4 )]
+position = Vector2( -64, 0 )
+
+[node name="CrosshairPart6" parent="CrosshairTileMap" instance=ExtResource( 4 )]
+position = Vector2( -64, -32 )
+
+[node name="CrosshairPart7" parent="CrosshairTileMap" instance=ExtResource( 4 )]
+position = Vector2( -96, 0 )
+
+[node name="CrosshairPart8" parent="CrosshairTileMap" instance=ExtResource( 4 )]
+position = Vector2( -96, -32 )
+
+[node name="CrosshairPart19" parent="CrosshairTileMap" instance=ExtResource( 4 )]
+position = Vector2( -32, -64 )
+
+[node name="CrosshairPart20" parent="CrosshairTileMap" instance=ExtResource( 4 )]
+position = Vector2( -64, -64 )
+
+[node name="CrosshairPart21" parent="CrosshairTileMap" instance=ExtResource( 4 )]
+position = Vector2( -96, -64 )
+
+[node name="CrosshairPart9" parent="CrosshairTileMap" instance=ExtResource( 4 )]
+position = Vector2( -64, 64 )
+
+[node name="CrosshairPart10" parent="CrosshairTileMap" instance=ExtResource( 4 )]
+position = Vector2( -64, 32 )
+
+[node name="CrosshairPart11" parent="CrosshairTileMap" instance=ExtResource( 4 )]
+position = Vector2( -96, 64 )
+
+[node name="CrosshairPart12" parent="CrosshairTileMap" instance=ExtResource( 4 )]
+position = Vector2( -96, 32 )
+
+[node name="CrosshairPart13" parent="CrosshairTileMap" instance=ExtResource( 4 )]
+position = Vector2( -128, 0 )
+
+[node name="CrosshairPart17" parent="CrosshairTileMap" instance=ExtResource( 4 )]
+position = Vector2( -128, -32 )
+
+[node name="CrosshairPart18" parent="CrosshairTileMap" instance=ExtResource( 4 )]
+position = Vector2( -128, 32 )
+
+[node name="CrosshairPart14" parent="CrosshairTileMap" instance=ExtResource( 4 )]
+position = Vector2( 0, 32 )
+
+[node name="CrosshairPart15" parent="CrosshairTileMap" instance=ExtResource( 4 )]
+position = Vector2( -32, 64 )
+
+[node name="CrosshairPart16" parent="CrosshairTileMap" instance=ExtResource( 4 )]
+position = Vector2( -32, 32 )
+[connection signal="input_event" from="." to="." method="_on_Vehicle_input_event"]
+[connection signal="mouse_entered" from="ContextInfoAread2D" to="." method="_on_Area2D_mouse_entered"]
+[connection signal="mouse_exited" from="ContextInfoAread2D" to="." method="_on_Area2D_mouse_exited"]

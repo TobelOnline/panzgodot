@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Hornisse.png-ca773f60f999ba1adbf001e7cde53871.stex"
+path="res://.import/move_arrow.png-4e572f66c96d8fb6aaa8e7fb05fb53e4.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/Hornisse.png"
-dest_files=[ "res://.import/Hornisse.png-ca773f60f999ba1adbf001e7cde53871.stex" ]
+source_file="res://Sprites/move_arrow.png"
+dest_files=[ "res://.import/move_arrow.png-4e572f66c96d8fb6aaa8e7fb05fb53e4.stex" ]
 
 [params]
 

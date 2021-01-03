@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/move_arrow.png-4e572f66c96d8fb6aaa8e7fb05fb53e4.stex"
+path="res://.import/move_arrow.png-57776f865053f014056bef90cacf4e6d.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/move_arrow.png"
-dest_files=[ "res://.import/move_arrow.png-4e572f66c96d8fb6aaa8e7fb05fb53e4.stex" ]
+source_file="res://sprites/move_arrow.png"
+dest_files=[ "res://.import/move_arrow.png-57776f865053f014056bef90cacf4e6d.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=false
+flags/filter=true
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2

@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Hornisse.png-ca773f60f999ba1adbf001e7cde53871.stex"
+path="res://.import/FogOfWar.png-7de6f8c9df27969d36c0bbcb425c8a46.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/Hornisse.png"
-dest_files=[ "res://.import/Hornisse.png-ca773f60f999ba1adbf001e7cde53871.stex" ]
+source_file="res://Sprites/FogOfWar.png"
+dest_files=[ "res://.import/FogOfWar.png-7de6f8c9df27969d36c0bbcb425c8a46.stex" ]
 
 [params]
 
