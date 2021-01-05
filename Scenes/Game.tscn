@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://scenes/FOGTile.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/Unit.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scripts/Game.gd" type="Script" id=3]
+[ext_resource path="res://Scenes/UI.tscn" type="PackedScene" id=4]
 
 [node name="Game" type="Node2D"]
 script = ExtResource( 3 )
@@ -2898,3 +2899,7 @@ position = Vector2( 320, 352 )
 
 [node name="Area2D192" parent="FogOfWar" instance=ExtResource( 1 )]
 position = Vector2( 352, 352 )
+
+[node name="UI" parent="." instance=ExtResource( 4 )]
+margin_top = 768.0
+margin_bottom = 800.0

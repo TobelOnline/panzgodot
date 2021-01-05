@@ -21,11 +21,9 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	var areas_in_motor = self.get_overlapping_areas()
-	print("Size: " + str(areas_in_motor))
 	for single_area in areas_in_motor:
 		if  single_area.visible == true and str(single_area.get_path()).begins_with("/root/Game/FogOfWar"):
 			single_area.visible=false
-			print("Set visible: " + str(single_area.get_path()))
 
 
 func _on_Unit_input_event(viewport, event, shape_idx):
