@@ -22,6 +22,7 @@ config/icon="res://sprites/icon.png"
 [autoload]
 
 GameManager="*res://scripts/GameManager.gd"
+Server="*res://Scripts/Server.gd"
 
 [display]
 
@@ -42,7 +43,6 @@ left_click={
 
 [rendering]
 
-quality/driver/driver_name="GLES2"
 vram_compression/import_etc=true
 vram_compression/import_etc2=false
 environment/default_clear_color=Color( 1, 1, 1, 1 )
