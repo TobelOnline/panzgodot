@@ -10,7 +10,6 @@ config_version=4
 
 _global_script_classes=[  ]
 _global_script_class_icons={
-
 }
 
 [application]
@@ -22,7 +21,7 @@ config/icon="res://sprites/icon.png"
 [autoload]
 
 GameManager="*res://scripts/GameManager.gd"
-Server="*res://Scripts/Client.gd"
+NetClient="*res://Scripts/NetClient.gd"
 
 [display]
 
