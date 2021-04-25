@@ -15,3 +15,4 @@ func _ready():
 func _process(delta):
 	for fogTile in get_tree().get_nodes_in_group("FOG"):
 		fogTile.visible = true
+# Hello World
