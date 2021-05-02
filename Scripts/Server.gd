@@ -1,7 +1,7 @@
 extends Node
 
 var network = NetworkedMultiplayerENet.new()
-var ip = "127.0.0.1"
+var ip = "tobelonline.ddns.net"
 var port = 1990
 
 func _ready():

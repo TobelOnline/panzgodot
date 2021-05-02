@@ -14,7 +14,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="Panz Test 0712201342"
+config/name="Panz"
 run/main_scene="res://scenes/Game.tscn"
 config/icon="res://sprites/icon.png"
 
