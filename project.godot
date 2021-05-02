@@ -21,7 +21,6 @@ config/icon="res://sprites/icon.png"
 [autoload]
 
 GameManager="*res://scripts/GameManager.gd"
-NetClient="*res://Scripts/NetClient.gd"
 
 [display]
 
